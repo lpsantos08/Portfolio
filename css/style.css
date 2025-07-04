@@ -1,0 +1,1581 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* aplica os estilos a todos os elementos HTML da página. */
+*{
+    margin: 0; /* Remove a margem padrão de todos os elementos */
+    padding: 0; /* Remove o preenchimento interno padrão */
+    box-sizing: border-box; /* garante que a altura e largura incluam padding e borda, evitando que o tamanho total do elemento seja alterado  */
+    text-decoration: none; /* Remove sublinhados de links (<a>) por padrão */
+    border: none;  /* remove bordas padrão de elementos como botões e inputs. */
+    outline: none; /* remove contornos de foco (exemplo: o contorno azul ao selecionar um campo de formulário). */
+    scroll-behavior: smooth; /* habilita rolagem suave ao clicar em âncoras */
+    font-family: 'Inter', sans-serif;  /* Define a fonte padrão para todos os elementos  caso ela não esteja disponível, usa uma fonte sans-serif genérica */
+}
+
+/* definindo variáveis CSS globais dentro do seletor :root */
+:root{ /* seletor especial no CSS que representa o elemento html. */
+    --bg-color:#eaf2fd; /* cor de fundo */
+    --text-color:#333; /* cor do texto  */
+    --main-color:#395375; /* cor principal */
+    --white-color: #fdfdfd;
+    --placeholder: #afaeae;
+    --portfolio:black;
+    --shadow-color:rgba(0,0,0, .2); /* sombra (preta com 20% de opacidade) */
+}
+
+/* variáveis p/ substituirem as versões claras declaradas em :root */
+.dark-mode{
+    --bg-color:#0a101a; /* cor de fundo */
+    --text-color:#fdfdfd; /* cor do texto  */
+    --main-color:#416799; /* cor principal */
+    --white-color: #0a101a;
+    --placeholder: #979797;
+    --portfolio: white;
+    --shadow-color:rgba(255, 255, 255, 0.2);/* sombra (preta com 20% de opacidade) */
+}
+
+/* estilizando html */
+html{
+  overflow-x: hidden; /* impede que a página tenha rolagem horizontal. */
+  width: 100%;
+  max-width: 100vw;
+  font-size: 62.5%;
+}
+
+/* estilizando body */
+body{
+    background: var(--bg-color); 
+    color:var(--text-color);
+    overflow-x: hidden; /* impede que a página tenha rolagem horizontal. */
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* estilizando header */
+span {
+    color: var(--main-color);
+}
+
+header{
+    position: fixed; /* header será fixado na tela durante o rolamento da página */
+    /* posicionam o header no topo e à esquerda da tela */
+    top: 0; 
+    left: 0;
+    width: 100%; /* faz o header ocupar 100% da largura da tela*/
+    padding: 2rem 7%; /* espaçamento 2rem superior e inferior e 7% nas laterais*/
+    display: flex; /* troca o elemento de colunas por linha */
+    align-items: center; /* Alinha os itens filhos verticalmente ao centro do header */
+    z-index:100;  /* ficará acima de outros elementos com valores de z-index menores */
+    transition: 1s; /* or de fundo ou sombra suavizadas em 1s */
+}
+
+.header.sticky{ /* efeito scroll (ao rolar a página) no header pelo script.js (classe sticky) */
+    background: var(--bg-color);
+    box-shadow: 0 .1rem 1rem var(--shadow-color);
+}
+
+.header.sticky .navbar a.active{ /* se o link estiver ativo ele usa a cor principal do site para destaque */
+    color: var(--main-color);
+}
+
+.header.sticky .navbar a::before{ /* alterar a cor da linha  */
+    background: var(--main-color) ;
+    opacity: .7;
+}
+
+.header.sticky #darkmode-icon{ /* altera a cor do icone dark */
+    color: var(--text-color);
+    opacity: .9;
+}
+
+.header.sticky .navbar a { /* efeito scroll nos textos do header */
+    color: var(--text-color);
+    font-weight: 550;
+}
+
+.navbar a { /* estilizando links (texto de navegação) */
+    position: relative; /* encapsular a linha do before apenas no <a> (menu mobile) */
+    font-size: 1.5rem;
+    color: var(--white-color);
+    font-weight: 600; /* peso negrito em 600 */
+    margin-right: 3.6rem;   /* adiciona uma margem à direita em cada link item */
+}
+
+.logo{ /* estilizando logo */
+    font-size: 2.5rem;
+    color: var(--text-color);
+    font-weight: 600; /* negrito em 600 */
+    cursor: default; /* cursor do mouse como o padrão (seta) */
+    margin-right: auto; /* pelo header ter display:flex faz com que a logo seja empurrada para a esquerda e outros elementos para a direita */
+}
+
+/* criação da linha abaixo dos links de navegação que será encapsulado no .navbar a*/
+.navbar a.active::before { /* ::before e ::after são usados para adicionar elementos antes ou depois do conteúdo de um elemento sem alterar o HTML. */
+    content: "";  /* necessário para exibição de pseudo elemento, mesmo que esteja vazio */
+    position: absolute; /* será posicionado de forma absoluta em relação ao elemento pai */
+    left: 0; /* começa na borda esquerda do contêiner */
+    bottom: -6px;
+    width: 100%; /* ocupar toda a largura */
+    height: .2rem; /* altura/espessura da linha */
+}
+
+#darkmode-icon{ /* estilizando darkmode icone dentro da div no navbar */
+    font-size: 2rem;
+    color: var(--white-color);
+    cursor: pointer; /* cursor de click */
+}
+
+#menu-icon{ /* estilizando menu icone dentro da div no navbar */
+    font-size: 3.6rem;
+    color: var(--text-color);
+    display: none;    /* não será visível para o usuário na página. */
+}
+
+section{ /* estilizando todas as sections */
+    min-height: 100vh;     /* ocupe no mínimo 100% da altura da janela */
+    padding: 10rem 7% 2rem;  /* 10 rem superior, 7% nas laterais, 2rem parte inferior */
+}
+
+/* estilizando home */
+.home{
+    display: flex;
+    /*alinha o item horizontalmente */
+    /* justify-content: center; 
+    /* alinha o item verticalmente */
+    align-items: center;     
+    text-align: center;
+}
+
+.home .home-content { /* alterando largura do conteúdo home */
+    max-width: 62rem;
+}
+
+.home-content h3 { /* estilizando textos do conteúdo */
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: .3;
+}
+
+.home-content h1 {
+    font-size: 5.5rem;
+    font-weight: 700;
+    margin-bottom: .3rem;
+}
+
+.home-content p{
+    font-size: 1.9rem;
+}
+
+.home-content .social-media a { /* estilizando icones  */
+    display: inline-flex;     /* Coloca os links lado a lado e permite usar alinhamento com justify-content e align-items */
+    justify-content: center;     /* centraliza horizontalmente */
+    align-items: center;  /* centraliza verticalmente o conteúdo do link. */
+    /* Define a largura e a altura do link, tornando-o um quadrado de 4rem x 4rem */
+    width: 4rem;
+    height: 4rem;
+    background: transparent;
+    border: .2rem solid var(--main-color);
+    border-radius: 50%;     /* borda arredondada em 50% */
+    box-shadow: .10rem .2rem .5rem var(--shadow-color); /* box-shadow: <deslocamento-horizontal> <deslocamento-vertical> <desfoque> <espalhamento> <cor>; */
+    font-size: 2.5rem;
+    color: var(--main-color);
+    margin: 2.5rem 1.5rem 3rem 0; /* Espaçamento externo: topo, direita, base e esquerda, respectivamente */
+    transition: .5s ease;
+}
+
+.home-content .social-media a:hover {
+    background: var(--main-color);
+    color: var(--white-color);
+}
+
+.home .profession-container{ /* estilizando o container pai da giratória */
+    position: absolute;     /* para poder usar o top, right... */
+    top: 50%;     /* 50% da altura do seu contêiner pai */
+    right:0;    /* será posicionado na borda direita do seu contêiner pai. */
+    transform: translateY(-50%);    /* 50% da sua própria altura para cima, de modo a centrá-lo verticalmente. */
+     /* definindo tamanho do conteiner */
+    width: 768px;
+    height: 100vh;
+    overflow: hidden;     /* qualquer conteúdo que ultrapasse os limites do .profession-container será ocultado */
+    pointer-events: none;     /* não responda a interações de ponteiro (como cliques ou toques) */
+}
+
+.home .profession-container .profession-box{ /* Elemento circular giratório */
+    position: absolute; /* Posiciona o elemento de forma absoluta dentro do container pai */
+    top: 0;
+    right: 0;
+    width: 800px; 
+    height: 800px;
+    border-radius: 50%;
+    display: flex;     /* altera colunas para linhas */
+    justify-content: center;     /* horizontalmente centralizado */
+    align-items: center;     /* verticalmente centralizado */
+    animation: professionRotate 15s ease-out infinite; /* animação de rotação com duração de 15 segundos, suavização no final, e repetição infinita */
+}
+
+/* Animação de rotanção que está inserida acima no profession box */
+@keyframes professionRotate{
+    0%,20% {
+        transform:rotate(0deg);
+    }
+    25%,45% {
+        transform:rotate(-90deg);
+    }
+    50%,70% {
+        transform:rotate(-180deg);
+    }
+    75%,95% {
+        transform:rotate(-270deg);
+    }
+    100% {
+        transform:rotate(-360deg);
+    }
+}
+
+.home .profession-box .profession { /* estilizando campo profissão */
+    position: absolute;    /* será posicionado de acordo com as coordenadas ou transformações definidas. */
+    left: 0;
+    display: flex;  /* altera colunas para linhas */
+    align-items: center;
+    flex-direction: column;     /* voltar para coluna, porém centralizada */
+    color: var(--main-color);
+    transform: rotate(calc(360deg / 4 * var(--i)));     /* 360° / 4 = 90° cada .profession será girado a partir de sua posição original, distribuindo-os uniformemente em um círculo. */
+    transform-origin: 384px;     /* Define o ponto de origem da transformação (rotação) a 384px de distância do centro do elemento. */
+    background: var(--bg-color);
+    color: var(--main-color);
+    padding: 13px 0 13px 0; /* espaçamento no profession (h3 - titulos da profissao) */
+}
+
+/* alinhando profession com circulo giratório) */
+.home .profession-box .profession:nth-child(1){ /* seleciona o primeiro filho (HTML) */
+     margin-left: 7rem; 
+}
+
+.home .profession-box .profession:nth-child(2){ /* CSS */
+     margin-top: 13rem;
+} 
+
+.home .profession-box .profession:nth-child(3){  /* JS */
+     margin-left: -.8rem;
+} 
+
+.home .profession-box .profession:nth-child(4){ /* Bootstrap */
+     margin-bottom: 6.5rem;
+}
+
+.home .profession-box .profession:nth-child(1) i { /* alinhando icones */
+     margin-right: 1.2rem;
+}
+
+.home .profession-box .profession:nth-child(2) i,
+.home .profession-box .profession:nth-child(3) i {
+     margin-left:  1.5rem;
+} 
+
+.home .profession i{ /* estilizando icones da profissao */
+    font-size: 3.8rem;
+}
+
+.home .profession h3 { /* estilizando profissao */
+    font-size: 3.2rem;
+    line-height: 1;
+    font-weight: 600;
+}
+
+.home .profession-box .circle { /* estilizando circulo de efeito */
+    width: 560px;
+    height: 560px;
+    border: 3px solid var(--main-color);
+    border-radius: 50%;
+}
+
+.home .profession-container .overlay{ /* estilizando ovarlay acima do circle e abaixo da img */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 100vh;
+    border-top: 480px solid var(--main-color);     /* 384px */
+    border-right: 480px solid var(--main-color);
+    border-bottom: 480px solid var(--main-color);   /* 50% da altura */
+    border-left: 480px solid transparent ;
+}
+
+.home-img img { /* estilizando img home */
+    width: 100%;
+    max-width: 37%;
+    position: absolute;
+    bottom: -2.9rem;
+    right: 0;
+    pointer-events: none;
+}
+
+.btn { /* estilizando botão home */
+    display: inline-block;   /* btn se comporta como um bloco, mas ainda assim ficar no fluxo de linha, permitindo que outros elementos fiquem ao seu lado. */
+    padding: 1.5rem 2rem;     /* altura e largura do btn */
+    background: var(--main-color);
+    border-radius: 5rem;
+    box-shadow: 0 .2rem .5rem var(--shadow-color);
+    font-size: 1.4rem;
+    color: var(--white-color);
+    letter-spacing: .1rem;
+    font-weight: 600;
+    border: .2rem solid transparent;     /* adicionando uma borda transparente */
+    transition: .5s ease;     /* transação do hover */
+}
+
+.btn:hover{
+    background: transparent;
+    color: var(--main-color);
+    border-color: var(--main-color);     /* alterando a cor da borda no hover */
+}
+
+/* estilização sobre */
+.about {
+    display: flex;  /* para organizar os elementos filhos em linha */
+    justify-content: center; /* centraliza os elementos filhos horizontalmente dentro da seção */
+    align-items: center; /* alinha os elementos verticalmente ao centro da altura do container */
+    gap: 4rem; /* adiciona um espaçamento de 4rem entre os elementos filhos */
+}
+
+.about-img img { /* estilização img sobre */
+    width: 35vw;
+}
+
+.heading { /* estilização titulos*/
+    font-size: 4rem;
+    text-align: center;
+}
+
+.about-content h2 { /* estilização titulo sobre */
+    text-align: left;
+    line-height: 5.2rem;
+}
+
+.about-content h3 {
+    font-size: 2.5rem;
+}
+
+.about-content p {
+    font-size: 2rem;
+    margin: 2rem 0 3rem;
+}
+
+/* estilização container serviços */
+.services .services-container {
+    display: flex; /* organizar os itens filhos em linha */
+    justify-content: center;     /* alinhamento horizontal */
+    align-items: center; /* alinhamento vertical */
+    /* Por padrão, os itens dentro de um contêiner flex tentam ficar em uma única linha,
+    mesmo que fiquem apertados. Com flex-wrap: wrap;, os itens serão quebrados em
+    múltiplas linhas quando necessário. */
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.services-container .services-box { /* estilizando caixas de serviços */
+    /* abreviação de flex-grow: 1;   O item pode crescer se houver espaço disponível */
+    /* flex-shrink: 1; O item pode encolher se não houver espaço suficiente */
+    /* flex-basis: 30rem; O tamanho inicial do item será 30rem */
+    flex: 1 1 0; 
+    background: var(--bg-color);
+    padding: 4rem 1rem 0;     /*espaçamento interno: TOP RIGHT+LEFT BOTTOM;  */
+    border-radius: 5rem;
+    box-shadow: 0 .1rem .5rem var(--shadow-color);    /* box-shadow: deslocamento-x deslocamento-y desfoque espalhamento cor; */
+    text-align: center;
+    border-top: .6rem solid var(--main-color);
+    border-bottom: .6rem solid var(--main-color);
+    transition: 0.5s ease;  /* atraso na transição do hover de 5 segundos */
+    min-height: 30rem; /* altura minima de 30rem */
+}
+
+.services-container .services-box:hover{
+    box-shadow: 0 .1rem 2rem var(--shadow-color);
+    /* Aumenta apenas 3% do tamanho original. */
+    transform: scale(1.06);     
+}
+
+.services{ /* estilizando section serviços */
+    min-height: auto;
+    padding-bottom: 7rem;
+}
+
+.services-box i { /* estilizando icones serviços */
+    font-size: 6rem;
+    color: var(--main-color);
+}
+
+.services-box h3 { /* estilizando textos serviços */
+    font-size: 2.4rem;
+    transition: .5s ease;
+}
+
+.services h2 {
+    margin-bottom: 5rem;
+}
+
+.services-box p {
+    font-size: 1.8rem;
+    margin: 1rem 0 3rem;     /* margin: TOP RIGHT+LEFT BOTTOM; */
+}
+
+/* estilização portfolio */
+.portfolio{
+    padding-bottom: 10rem;
+}
+
+.portfolio h2 { /* estilizando titulo portfolio */
+    margin-bottom: 4rem;
+}
+
+.portfolio .portfolio-container {
+    display: grid;  /* transforma em um container de grade, permitindo organizar os elementos filhos em linhas e colunas. */
+    grid-template-columns: 1fr 1fr 1fr; /* 3 colunas de tamanhos iguais */
+    align-items: center; /* alinha os itens filhos ao centro verticalmente dentro do container */
+    justify-items: center; /* funciona apenas com Grid — alinha os conteúdos dos itens individuais ao centro horizontalmente */
+    gap: 2rem; /* espaçamento de 2rem entre os itens */
+
+}
+
+.portfolio-container .portfolio-box{
+    position: relative;     /* não tira o elemento do fluxo do layout, apenas permite deslocá-lo. */
+    display: flex;     /* contêiner flexível, permitindo organizar seus filhos (img e .portfolio-layer) em linha ou coluna. */
+    border-radius: 2rem;
+    box-shadow: 0 0 1rem var(--shadow-color);
+    overflow: hidden;     /* qualquer conteúdo que ultrapasse os limites do contêiner será cortado e não ficará visível. */
+    min-height: 100%; 
+}
+
+.portfolio-box .portfolio-layer { /* camada de imagem portfolio */
+    position: absolute; /* será posicionado em relação ao seu ancestral mais próximo que tenha position: relative; no caso o portfolio.box*/
+    bottom: 0; /* faz a camada ocupar toda a área do box-pai */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, var(--portfolio) 80%, transparent); /* Cria uma sobreposição com transparência, misturando 70% da cor definida em --portfolio com 30% de transparência */
+    color: var(--white-color);
+    display: flex; /* Transforma o elemento em um contêiner flexível para organizar os filhos. */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* Organiza os itens filhos em uma coluna (um abaixo do outro). */
+    text-align: center; /* Centraliza o texto horizontalmente. */
+    padding:  0 4rem; /* espaçamento interno de 4rem nas laterais esquerda e direita, sem espaçamento na parte superior ou inferior. */
+    opacity: 0;     /* se torna invisivel, bom para fazer animações hover */
+    transition: .5s ease;
+}
+
+.portfolio-box:hover .portfolio-layer {
+    opacity: 1; /* torna a camada visível quando o mouse passa sobre .portfolio-box */
+}
+
+.portfolio-box img{
+    width: 100%;
+    transition: 1.5s ease;    /* transição do efeito em 5 segundos com calma */
+}
+
+.portfolio-box:hover img {
+    transform: scale(1.1);     /* efeito de aumento na img */
+}
+
+.portfolio-layer h4 { /* estilização texto hover */
+    font-size: 2.5rem;
+    padding-bottom: 1rem;
+}
+
+.portfolio-layer p {
+    font-size: 2rem;
+    margin: .2rem 0 .5rem;     /* Margem superior/ laterais / inferior  */
+    font-weight: 600;
+}
+
+.portfolio-layer a { /* background do i */
+    display: inline-flex;     /* bloco em linha e o flex para alinhar o conteúdo  */
+    justify-content: center;     /* alinha horizontalmente */
+    align-items: center;     /* alinha verticalmente */
+    width: 4rem;
+    height: 4rem;
+    background: var(--white-color);
+    border-radius: 50%;
+    margin-top: 4rem;
+}
+
+.portfolio-layer a i {
+    font-size: 2.3rem;
+    color: var(--text-color);
+}
+
+/* estilização depoimentos */
+.testimonial-container {
+    display: flex;     /* modelo de layout Flexbox, que facilita a criação de layouts responsivos e alinhamentos de elementos dentro de um contêiner. */
+    align-items: center;
+    flex-direction: column;     /* transformar os elementos em layout coluna */
+    width: 100%; /* Define que a largura do contêiner ocupará 100% da largura disponível */
+    padding: 5rem 1rem;    /* espaçamento interno 5rem superior e inferior/ 1rem laterais */
+}
+
+.testimonial-container .testimonial-wrapper{ /* Wrapper: contêiner usado para organizar e estilizar elementos com mais controle no layout. */
+    position: relative;     /* posição do elemento será relativa, permitindo o uso de propriedades como `top`, `left`, etc. */
+    max-width: 100rem;
+    width: 100%; /* A largura do wrapper será 100% do seu contêiner pai */
+    padding: 5rem; /* Define um espaçamento interno de 5rem (todos os lados) */
+}
+
+.testimonial-wrapper .testimonial-box{
+    padding: 1rem;
+    border-radius: 2rem;
+    overflow: hidden;     /* qualquer conteúdo que ultrapasse os limites do elemento será ocultado e não será visível. */
+}
+
+.testimonial-content .testimonial-slide{
+    display: flex;   /* ativa o Flexbox para organizar os elementos internos */
+    align-items: center;   /* centraliza os elementos verticalmente (no eixo cruzado) */
+    flex-direction: column;   /* organiza os elementos filhos em coluna (um abaixo do outro) */
+    background: var(--bg-color);
+    border-radius: 2rem;
+    box-shadow: 0 .1rem .5rem var(--shadow-color);
+    padding: 3rem 5rem;     /* 3rem superior e inferior | 5rem laterais */
+    border-top: .8rem solid var(--main-color);
+    border-bottom: .8rem solid var(--main-color);
+    min-height: 30rem;
+}
+
+.testimonial-slide img {
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover; /* A imagem irá cobrir toda a área do contêiner */
+    border-radius: 50%;
+    border: .5rem solid var(--bg-color);
+    outline: .5rem solid var(--main-color);     /* definir uma linha de contorno ao redor de um elemento | segunda borda */
+}
+
+.testimonial-slide h3 {
+    font-size: 2.5rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.testimonial-slide p {
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.testimonial-box .swiper-button-next,
+.testimonial-box .swiper-button-prev{
+    color: var(--main-color);
+}
+
+.testimonial-box .swiper-button-next{
+    right: 0;
+}
+
+.testimonial-box .swiper-button-prev{
+    left: 0;
+}
+
+.testimonial-box .swiper-pagination-bullet { /* estilização indicação do slide */
+    background: var(--text-color);
+}
+
+.testimonial-box .swiper-pagination-bullet-active{
+    background-color: var(--main-color);
+}
+
+/* estilização contato */
+.contact h2 {
+    margin-bottom: 3rem;
+}
+
+.contact form{
+    max-width: 80rem;
+    margin: 1rem auto;     /* Adiciona 1rem de margem no topo e na base, e auto centraliza o formulário horizontalmente. */
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact form .input-box {
+    display: flex;    /* container flexível, permitindo organizar os elementos internos horizontalmente. */
+    justify-content:space-between;    /* Distribui os inputs com espaço entre eles, empurrando-os para os extremos laterais. */
+    flex-wrap: wrap;    /* Se os inputs forem muito largos, eles quebram para a próxima linha em telas menores. */
+}
+
+.contact form .input-box input,
+.contact form textarea { /* estilização dos campos do form */
+    width: 100%;     /* faz os campos ocuparem toda a largura disponível do contêiner pai */
+    padding: 2rem;  /* Espaçamento interno de 1.5rem em todos os lados, */
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background:var(--bg-color);
+    border-radius: .8rem;
+    margin: .7rem 0;
+    box-shadow: 0 .1rem .5rem var(--shadow-color);
+}
+
+.contact ::placeholder {
+  color: var(--placeholder);
+}
+
+.contact form .input-box input{
+    width: 49%;  /* define a largura dos inputs para ocupar 49% do contêiner pai, permitindo que dois inputs fiquem lado a lado com espaço entre eles */
+}
+
+.contact form textarea {
+    resize: none;    /* Impede que o usuário redimensione o elemento, geralmente usado em <textarea>. */
+}
+
+.contact form .btn{ /* estilzação btn contato */
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+/* FEEDBACK FORM */
+.mensagem-feedback {
+  position: fixed;   /* fixa o elemento na tela, independente do scroll, permanecendo sempre visível */
+  bottom: 20rem;  /* posiciona a 20rem do rodapé da janela */
+  left: 50%; /* posiciona horizontalmente no meio da tela */
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  color: #fff;
+  padding: 1rem 2rem;  /* espaçamento interno: 1rem topo/baixo e 2rem laterais */
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  opacity: 0;   /* começa invisível, para ser exibido via animação */
+  transition: opacity 0.4s ease-in-out;
+}
+
+.mensagem-feedback.erro {
+  background-color: #f44336; /* Erro = vermelho */
+}
+
+.mensagem-feedback.mostrar {
+  opacity: 1;
+}
+
+.escondido {
+  display: none;
+}
+
+/* estilização footer */
+.footer {
+    display: flex;    /* tornando os elementos filhos organizados em uma linha ou coluna flexível */
+    justify-content: space-between;    /* distribui os elementos com o máximo de espaço entre eles, colocando um na esquerda e outro na direita. */
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2rem 7%;
+    background: var(--main-color);
+}
+
+.footer-text p {
+    font-size: 1.1rem;
+    color: var(--white-color);
+}
+
+.footer-iconTop a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: .8rem;
+    background: var(--white-color);
+    border-radius: .8rem;
+    border: .2rem solid var(--main-color);
+    outline: .2rem solid transparent;
+    transition: .5s ease;
+}
+
+.footer-iconTop a:hover {
+    outline-color: var(--white-color);
+}
+
+.footer-iconTop a i {
+    font-size: 1.8rem;
+    color: var(--main-color);
+}
+
+/* Responsividade Tela Monitor */
+@media (max-width:2000px) { 
+    
+    html {
+        font-size: 70%;
+    }
+    
+    /* 2000px (monitor) home */
+    .home .profession-container{ /* alterando altura e largura do container pai da giratória */
+         height: 100vh;
+         width: 60vw;
+    }
+
+    .home .profession-container .profession-box {  /* alterando posição da bola giratória */
+         right: 10rem;
+         height: 100vh;
+    }
+
+    .home .profession-box .circle { /* alterando posição/tamanho do circulo  */
+         position: fixed;  /* fixa o círculo na tela */
+         width: 540px;   /* 670 */
+         height: 540px;
+         z-index: -1; /* coloca o círculo atrás de outros elementos na tela */
+    }
+
+    .home .profession-box .profession:nth-child(1) i{ /* alinhando profissoes e icones no circulo */
+         margin-left: 10px;
+    }
+
+    .home .profession-box .profession:nth-child(2) i{
+         margin-right: 20px;
+    }
+
+    .home .profession-box .profession:nth-child(3) i {
+         margin-right: 10px;
+    }
+
+    .home .profession-container .overlay {  /* alinhando overlay */
+        border-top: 50vh solid var(--main-color);   /* topo com 50% da altura da janela */
+        border-right: 25.3vw solid var(--main-color); /* Cria uma borda do lado direito com 25.3% da largura da janela */
+        border-bottom: 50vh solid var(--main-color);   /* Espelha a borda do topo, criando simetria vertical com a mesma cor e altura */
+        border-left: 26.5vw solid transparent ; /* A borda da esquerda é "invisível", mas necessária para formar um formato de polígono */
+    }
+
+    .home-img img {  /* alinhando img */
+         max-width: 650px;
+         bottom: -.1rem;
+    }
+}
+
+/* Responsividade Notebook Grande */
+@media (max-width:1800px) {
+
+    html {
+        font-size: 65%;
+    } 
+
+    /* 1800px (grande) home */
+    .home .home-content { /* alterando largura do conteúdo home */
+         max-width: 50rem;
+    }
+
+    .home .profession-container .profession-box { /* alterando posição da bola giratória como um todo */
+       right: 4rem;
+       height: 100vh;
+    }
+
+    .home .profession-box .circle { /* alterando posição/tamanho do circulo */
+        position: fixed;
+        width: 560px;  /*  670 */
+        height: 560px;
+        z-index: -1;
+    }  
+
+    /* alinhando o circulo giratório com profession h3 e i*/
+     .home .profession-box .profession:nth-child(1){  /* seleciona o primeiro filho do elemento .profession (HTML)  */
+        margin-left: 6.8rem;
+    } 
+
+    .home .profession-box .profession:nth-child(2) {
+        margin-bottom: 1rem;
+    }
+
+    .home .profession-box .profession:nth-child(3) {
+        margin-left: -1rem;
+    }
+    
+    .home .profession-box .profession:nth-child(4) {
+        margin-top: -.5rem;
+    } 
+
+    .home .profession-box .profession:nth-child(2) i { 
+        margin-left: 20px;
+    }
+
+    .home .profession-box .profession:nth-child(3) i {
+        margin-left: 10px;
+    }
+
+    .home .profession-box .profession:nth-child(4) i {
+        margin-right: 1rem;
+    } 
+
+    .home-img img { 
+        max-width: 600px;
+        bottom: -.1rem;
+    } 
+}
+
+/* Responsividade Notebook Normal */
+ @media (max-width:1550px) {
+
+    html {
+        font-size: 60%;
+    }
+
+    .home .profession-container{ /* home */
+       height: 100vh; /* altura do container como 100% da altura da janela alinhar verticalmente o overlay  */
+    }
+
+    .home-content{  /* movimentando conteudo home para esquerda */
+        margin-left: -4rem;
+    }
+
+    .home .profession-container .profession-box {  /* bola giratória como um todo */
+        right: -8rem;
+    }
+
+    .home .profession h3 { /* estilizando profissão por si só  */
+        margin-left: 1rem; 
+        margin-right: 1rem;
+        font-size: 3rem;
+        line-height: 1;         /* definindo a altura da linha do texto */
+        font-weight: 600;
+    }
+
+    .home .profession-box .circle { /* alterando posição/tamanho do circulo */
+        position: fixed;
+        width: 580px;   
+        height: 580px;
+        z-index: -1;
+    }
+
+    /* alinhando o circulo giratório com profession h3 */
+    .home .profession-box .profession:nth-child(1){  /* seleciona o primeiro filho do elemento .profession (HTML)  */
+        margin-left: 6rem;
+    } 
+
+    .home .profession-box .profession:nth-child(2) {
+        margin-bottom: 2.5rem;
+    }
+
+    .home .profession-box .profession:nth-child(3) {
+        margin-left: .5rem;
+    }
+    
+    .home .profession-box .profession:nth-child(4) {
+        margin-top: 2rem;
+    } 
+
+    .home .profession-box .profession:nth-child(1) i {  
+        margin-left: 1uurem;
+    } 
+
+    .home .profession-box .profession:nth-child(2) i { 
+        margin-left: 2rem;
+    }
+
+    .home .profession-box .profession:nth-child(3) i {
+        margin-left: 2rem;
+    }
+
+    .home .profession-box .profession:nth-child(4) i {
+        margin-left: 1rem;
+    } 
+
+    .home-img img {
+        max-width: 550px;
+        bottom: -.1rem;
+    }
+
+    .services-box h3 { /* serviços */
+        font-size: 2.5rem;
+        padding-bottom: .5rem;
+    }
+
+    .services-box p {
+        font-size: 1.8rem;
+    } 
+
+    .services-box i {
+        margin-top: -2rem;
+    }
+}
+
+@media (max-width:1360px) { /* services */
+
+    .services-box h3 { /* titulo serviços */
+        font-size: 2.3rem;
+    }
+
+    .services-box i {
+        font-size: 5rem;
+    }
+}
+
+/* Responsividade Tela Menor */
+@media (max-width:1300px) {
+
+    .home .profession-container .profession-box { /* bola giratória como um todo */
+       right: -17rem;
+    }
+
+   .home-img img {
+       width: 480px;
+       margin-right: -2rem;
+   }
+
+    /* manipulando formato da grid */
+    .services .services-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+         "item1 item2"
+         "item3 item3";
+    }
+
+    .services-container{
+       justify-content: center; 
+       text-align: center;
+    }
+
+    .services .services-container > :nth-child(1) {
+        grid-area: item1;
+    }
+
+    .services .services-container > :nth-child(2) {
+        grid-area: item2;
+    }
+
+    .services .services-container > :nth-child(3) {
+        grid-area: item3;
+        min-height: 20rem;
+        max-width: 80rem;
+        justify-self: center; /* centraliza horizontalmente dentro do grid */
+    }
+
+    .services-container .services-box {
+        padding: 1rem 1rem 0 1rem;
+    }
+
+    .services-container .services-box {
+        min-height: 30rem;
+    }
+
+    .services-box i {
+        margin-top: 2rem;
+        font-size: 6rem;
+    }
+
+    .services-box h3 {
+        font-size: 2.5rem;
+    }
+
+    .services-box p {
+        font-size: 2rem;
+    }
+
+}
+
+/* Responsividade Tela Tablet */
+@media (max-width:1200px) {
+
+    .header{ /* alinhando .header */
+        padding: 2rem 3%;
+    }
+
+    section{ /* aumentando espaçamento dos conteudos nas sections*/
+        padding: 10rem 3% 2rem;
+    }
+
+    .home-content {
+        margin-left: -2rem;
+    }
+
+    .home .profession-container .profession-box { /* bola giratória como um todo */
+       right: -20rem;
+    }
+
+    .home .profession-container .overlay {
+         left: 11rem;
+    }
+
+    .home-img img {
+       width: 450px;
+       margin-right: -2rem;
+    }
+
+    .portfolio .portfolio-container {     /* portfolio */
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .portfolio-box{
+        aspect-ratio: 16 / 9;
+    }
+}
+
+@media (max-width:1150px) {
+
+    html{
+        font-size: 55%;
+    }
+
+    .home .profession-container .profession-box{
+        left: 8rem;
+    }
+
+    /* alinhando o circulo giratório com profession h3 */
+    .home .profession-box .profession:nth-child(1){  /* seleciona o primeiro filho do elemento .profession (HTML)  */
+        margin-left: 7rem;
+    } 
+
+    .home .profession-box .profession:nth-child(2) {
+        margin-bottom: .5rem;
+    }
+
+    .home .profession-box .profession:nth-child(3) {
+        margin-left: -1rem;
+    }
+    
+    .home .profession-box .profession:nth-child(4) {
+        margin-top: .5rem;
+    } 
+
+    .home .profession-box .profession:nth-child(1) i {  
+        margin-left: 1uurem;
+    } 
+
+    .home .profession-box .profession:nth-child(2) i { 
+        margin-left: 2rem;
+    }
+
+    .home .profession-box .profession:nth-child(3) i {
+        margin-left: 1rem;
+    }
+
+    .home .profession-box .profession:nth-child(4) i {
+        margin-left: 1.5rem;
+    }
+
+    .services,
+    .portfolio{
+        padding-bottom: 7rem;
+    }
+
+    .contact{
+        min-height: auto;
+    }
+
+    .footer{
+        padding: 2rem 3%;
+    }
+} 
+
+@media (max-width:1100px) {
+
+    .services,
+    .portfolio{
+        padding-bottom: 7rem;
+    }
+
+    .services-container .services-box {
+        padding: 1rem 1rem 0;     
+    }
+
+    .contact{
+        min-height: auto;
+    }
+
+    .footer{
+        padding: 2rem 3%;
+    }
+
+} 
+
+@media (max-width:1050px) {
+    .home-img img { /* imagem home */
+       width: 400px;
+       margin-right: -2rem;
+    }
+}
+
+@media (max-width:990px) {
+
+    .home .profession-container .profession-box {    /* home */
+       right: -50rem;
+    }
+
+    .about{     /* sobre */
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .about-content h2 {
+        text-align: center;
+    }
+
+    .about-img img {
+        width: 50vw;
+        margin-top: -2rem;
+    }
+}
+
+/* Responsividade Alinhando Overlay */
+@media (max-width:960px) {
+
+    .home .profession-container .overlay {     /* home */
+        width: 55vw;
+        height: 55vh;
+        margin-left: -5rem;
+    }
+
+    .home .profession-container .profession-box {
+        left: 8rem;
+    }
+
+    .home-content{
+        width: 40rem;
+        margin-left: 1rem;
+    }
+
+    .home-img img {
+       width: 360px;
+       margin-right: -2rem;
+    }
+}
+
+/* home fora do overlay */
+@media (max-width:900px) {
+
+    .navbar a:nth-child(1){    /* header */
+        color: var(--main-color);
+    }
+
+    .home .profession-container .profession-box {     /* home */
+       left: 12rem;
+    }
+
+    .home .profession-container .overlay {
+        padding-left: 0;
+        left: 18.5rem;
+    }
+
+    .home h1 {
+        font-size: 4.5rem;
+        padding: .5rem;
+    }
+
+    .home-content {
+       width: 45rem;
+    }
+
+    .home-img img {
+        display: none;
+    }
+
+    .portfolio-layer p {
+        font-size: 1.8rem;
+    }
+
+    .portfolio-layer h4 {
+        font-size: 2.2rem;
+    }
+}
+
+/* sobre fora do overlay */
+@media (max-width:860px) {
+
+    .navbar a:nth-child(2){ /* header */
+        color: var(--main-color);
+    }
+
+    .home .profession-container .profession-box {  /* home */
+       left: 15rem;
+    }
+
+    .home .profession-container .overlay {
+        left: 24.3rem;
+    }
+
+    .home h1 {
+        font-size: 4.5rem;
+        padding: .5rem;
+    }
+
+    .home-content{
+        margin-left: 1rem;
+        width: 45rem;
+    }
+
+    .services-container .services-box h3 {  /* serviços */
+        font-size: 2.3rem;
+    }
+
+    .services-container .services-box i {
+        font-size: 5rem;
+    }
+
+    .services-box p {
+        font-size: 1.9rem;
+    }
+}
+
+/* serviços fora do overlay */
+@media (max-width:830px) {
+
+     .navbar a:nth-child(3){
+        color: var(--main-color);
+    }
+
+    .home .profession-container .profession-box {
+       left: 20rem;
+    }
+
+    .home .profession-container .overlay {
+        left: 32.3rem;
+    }
+
+    .home-content{
+        margin-left: 1rem;
+        width: 45rem;
+    }
+}
+
+/* translate(-50%, 50%) */
+@media (max-width:795px) {
+
+    .header:not(.sticky) .navbar a:first-child {    /* header */
+         color: var(--main-color);
+    }
+
+    .header:not(.sticky) .navbar a {
+        color: var(--text-color);
+    }
+
+    #menu-icon{
+        display: block;
+        cursor: pointer;
+    }
+
+    #darkmode-icon {
+        position: absolute;
+        right: 7rem;
+        font-size: 2.6rem;
+        color: var(--text-color);
+        cursor: pointer;
+    }
+
+    .navbar{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 3%;
+        background: var(--bg-color);
+        border-top: .1rem solid rgba(0, 0, 0, .2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+        display: none;
+    }
+
+    .navbar.active{
+        display: block;
+    }
+
+    .navbar a {
+        display: block;
+        font-size: 2rem;
+        margin: 3rem 0;
+        color: var(--text-color);
+    }
+
+    .navbar a:nth-child(1),
+    .navbar a:nth-child(2) {
+        color: var(--text-color);
+    }
+
+    .navbar a.active{
+        color: var(--main-color);
+    }
+
+    .navbar a::before{
+        display: none;
+    }
+
+    .home {   /* home */
+        padding: 0 5% 25rem;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .home-content h3{
+        font-size: 2.6rem;
+    }
+
+    .home-content h1 {
+        font-size: 5rem;
+    }
+
+    .home-content .social-media a {
+        margin: 2.5rem .75rem 3rem;
+    }
+
+    .home .profession-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        left: 0;
+    }
+
+    .home .profession-container .profession-box{
+        position: relative;
+        width: 400px;
+        height: 400px;
+        top: 45%;
+        left: 0;
+    }
+
+    .home .profession-box .circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 2px solid var(--main-color);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    .home .profession-container .overlay {
+       position: fixed;
+       top: 90vh;
+       left: 56vw;
+       transform: rotate(90deg) translate(-50%, 50%) scaleY(3);
+       border-width: 129rem; /* redefinindo tamanho das bordas do overlay (lados) */
+    }
+
+    .home .profession-box .profession{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: rotate(calc(360deg / 4 * var(--i))) translateY(-210px); 
+        transform-origin: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        translate: -50% -50%; /* centraliza o transform */
+    }
+
+    .profession-box .profession h3 {
+        font-size: 2rem;
+    }
+
+    /* alinhando profissao com circulo */
+    .home .profession-box .profession:nth-child(3) {
+        transform: rotate(180deg) translateY(-210px) translateX(-10px);
+    }
+
+    .home .profession-box .profession:nth-child(2) {
+        transform: rotate(90deg) translateY(-210px) translateX(-116px);
+    }
+    
+    .home .profession-box .profession:nth-child(1) {
+        transform: rotate(0deg) translateY(-210px) translateX(-65px);
+    }
+
+    .services .services-container {     /* serviços */
+        grid-template-columns: 1fr;
+        grid-template-areas:
+         "item1"
+         "item2"
+         "item3";
+    }
+
+    .services .services-container > :nth-child(1),
+    .services .services-container > :nth-child(2){
+        /* grid-area: item3; */
+        min-height: 20rem;
+        max-width: 80rem;
+        justify-self: center; /* centraliza horizontalmente dentro do grid */
+    }
+
+    .services-box p {
+        font-size: 2rem;
+    }
+
+    .services-container .services-box h3{
+        font-size: 2.5rem;
+    }
+
+    .services h2,
+    .portfolio h2 {
+        margin-bottom: 3rem;
+    }
+
+    .portfolio-layer p {
+      font-size: 1.7rem;
+    }
+
+    .portfolio-layer h4 {
+      font-size: 2rem;
+    }
+
+    .portfolio-layer a {
+         margin-top: .5rem;
+         width: 3rem;
+         height: 3rem;
+    }
+
+    .portfolio-layer a i {
+        font-size: 1.90rem;
+    }
+
+
+    .testimonial-container .testimonial-wrapper {    /* depoimentos */
+        padding: 5rem 0;
+    }
+
+    .testimonial-content .testimonial-slide {
+        padding: 3rem 2rem;
+    }
+
+    .testimonial-box .swiper-button-next,
+    .testimonial-box .swiper-button-prev {
+        display: none;
+    }
+}
+
+@media (max-width:765px) {
+    .home .profession-container .overlay {
+       position: fixed;
+       top: 90vh;
+       left: 57vw;
+       transform: rotate(90deg) translate(-50%, 50%) scaleY(3);
+    }
+
+    .portfolio .portfolio-container{
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-box{
+        max-width: 60rem;
+        max-height: 35rem;
+    }
+
+    .portfolio-layer p {
+      font-size: 2rem;
+    }
+
+    .portfolio-layer h4 {
+      font-size: 2.7rem;
+    }
+
+    .portfolio-layer a {
+         margin-top: 1rem;
+         width: 4rem;
+         height: 4rem;
+    }
+
+    .portfolio-layer a i {
+        font-size: 2.5rem;
+    }
+
+}
+
+@media (max-width:650px) {
+
+    .services .services-container{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .testimonial-content .testimonial-slide {
+        min-height: 40rem;
+    }
+
+    .testimonial-slide img{
+        margin-top: 4rem;
+    }
+}
+
+/* ajuste para html reduzido */
+@media (max-width:500px) {
+
+     html {
+        font-size: 45%; 
+    }
+
+    .home .profession-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+        width: 100vw;
+        left: 0;
+    }
+
+    .home .profession-container .profession-box {
+        position: relative;
+        width: 25rem;  
+        height: 25rem;
+        top: 45%;
+        left: 0;
+    }
+
+    .home .profession-box .circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 0.125rem solid var(--main-color); 
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    .home .profession-container .overlay {
+        position: fixed;
+        left: 60%;
+    }
+
+    .home .profession-box .profession {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: rotate(calc(360deg / 4 * var(--i))) translateY(-13rem);  
+        transform-origin: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        translate: -50% -50%;
+    }
+
+    .profession-box .profession h3 {
+        font-size: 2rem;
+    }
+
+    /* ajustes finos de alinhamento */
+     .home .profession-box .profession:nth-child(4) {
+        transform: rotate(-90deg) translateY(-13.5rem) translateX(.5rem); 
+    }
+
+    .home .profession-box .profession:nth-child(4) i {
+        transform: rotate(0deg) translateX(-.5rem); 
+    }
+
+    .home .profession-box .profession:nth-child(3) {
+        transform: rotate(180deg) translateY(-13rem) translateX(-1rem); 
+    }
+
+    .home .profession-box .profession:nth-child(2) {
+        transform: rotate(90deg) translateY(-13.5rem) translateX(-13.2rem); 
+    }
+
+    .home .profession-box .profession:nth-child(1) {
+        transform: rotate(0deg) translateY(-13.5rem) translateX(-7.5rem);
+    }
+
+    .services-container .services-box{
+        width: 90%;
+    }
+
+    .contact form .input-box input {
+        width: 100%;
+    } 
+
+    .footer {
+        padding-bottom: 4rem;
+        padding-top: 3rem;
+    }
+}
